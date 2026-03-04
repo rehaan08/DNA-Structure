@@ -75,9 +75,9 @@ streamlit run dna_app_fixed.py
 
 1. **Input Sequence**: Enter your DNA sequence (A, T, G, C) in the sidebar text area or click **"Generate random"** for a test 60bp strand.
 2. **Analyze Stability**: Use the **"Analysis window"** slider to adjust the sensitivity of the $T_m$ calculation (default is 6bp).
-3. **Explore the Helix**: In the **3D Analytics** tab, use the "Rotate" button to view the topology. Click **"Focus"** next to any enzyme in the Engineering tab to inspect that specific site.
-4. **Optimize**: Review the **Mutation Registry**. Click **"Apply"** on suggested changes to automatically update your sequence with more stable bases.
-5. **Compare & Export**: Save a snapshot in the **Comparison** tab before making major changes. Once finished, use the **"Export PDF report"** button to save your findings.
+3. **Explore the Helix**: In the **3D Analytics** tab, use the "Rotate" button to view the topology. Click **"Focus"** next to any enzyme in the Engineering tab to inspect that specific site. Hover over any base pairing for all it's information.
+5. **Optimize**: Review the **Mutation Registry**. Click **"Apply"** on suggested changes to automatically update your sequence with more stable bases.
+6. **Compare & Export**: Save a snapshot in the **Comparison** tab before making major changes. Once finished, use the **"Export PDF report"** button to save your findings.
 
 ---
 
