@@ -13,10 +13,10 @@ except ImportError:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "reportlab",
                            "--quiet", "--disable-pip-version-check"])
 
-# ── PAGE CONFIG ────────────────────────────────────────────────────────────────
+
 st.set_page_config(page_title="DNA Structural Analyzer", layout="wide", initial_sidebar_state="expanded")
 
-# ── DESIGN SYSTEM ──────────────────────────────────────────────────────────────
+# DESIGN SYSTEM
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
@@ -97,7 +97,7 @@ hr { border: none; border-top: 1px solid #131D27 !important; margin: 1rem 0 !imp
 </style>
 """, unsafe_allow_html=True)
 
-# ── CONSTANTS ──────────────────────────────────────────────────────────────────
+#CONSTANTS
 C_STABLE   = "#2A7A6A"
 C_PARTIAL  = "#2A4A6A"
 C_UNSTABLE = "#7A2A2A"
@@ -109,7 +109,7 @@ RE_SITES = {
     "SmaI":    "CCCGGG",   "XhoI":    "CTCGAG",
 }
 
-# ── SESSION STATE ──────────────────────────────────────────────────────────────
+# SESSION STATE 
 for k, v in [("dna",""), ("history",[]), ("selected_enzymes",[]), ("focus_idx",None)]:
     if k not in st.session_state: st.session_state[k] = v
 
@@ -149,7 +149,7 @@ def generate_pdf_report(dna_seq, n, mean_tm, gc_pct, found_enz, mutations, rev_c
         topMargin=16*mm, bottomMargin=16*mm
     )
 
-    # -- Colour palette: dark text on white for print readability ---------------
+   
     FG      = colors.HexColor("#1A2530")    # dark slate - body text
     MUTED   = colors.HexColor("#4A6070")    # medium - labels
     ACCENT  = colors.HexColor("#1A5A7A")    # dark teal - headings/values
@@ -160,7 +160,7 @@ def generate_pdf_report(dna_seq, n, mean_tm, gc_pct, found_enz, mutations, rev_c
     TBL_HDR = colors.HexColor("#E4EEF2")    # table header bg
     TBL_ROW = colors.HexColor("#F7FAFB")    # table row bg
     TBL_ALT = colors.HexColor("#EBF2F5")    # alternate row tint
-    # ── Styles ─────────────────────────────────────────────────────────────────
+    #Styles
     MONO = "Courier"
     SANS = "Helvetica"
 
@@ -193,7 +193,7 @@ def generate_pdf_report(dna_seq, n, mean_tm, gc_pct, found_enz, mutations, rev_c
     def HR(): return HRFlowable(width="100%", thickness=0.5, color=RULE, spaceAfter=6, spaceBefore=4)
     def SP(h=3): return Spacer(1, h*mm)
 
-    # ── Analytical write-up ────────────────────────────────────────────────────
+    # Analytical write-up
     grade = "STABLE" if mean_tm > 18 else "UNSTABLE"
     grade_color = "#1A6A5A" if mean_tm > 18 else "#8A1A1A"
 
@@ -373,7 +373,7 @@ def _note(msg):
     return (f'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:0.73rem;'
             f'color:#1E3A4A;padding:0.4rem 0">{msg}</div>')
 
-# ── SIDEBAR ────────────────────────────────────────────────────────────────────
+# SIDEBAR
 st.sidebar.markdown('<div class="section-label">Sequence</div>', unsafe_allow_html=True)
 
 if st.sidebar.button("Generate random · 60 bp"):
@@ -396,15 +396,15 @@ window_size = st.sidebar.slider("Analysis window (bp)", 3, 10, 6)
 
 st.sidebar.markdown('<div class="section-label" style="margin-top:1.2rem">Enzyme overlay</div>', unsafe_allow_html=True)
 
-# ── VALIDATION ─────────────────────────────────────────────────────────────────
+
 invalid_idx = [i for i, c in enumerate(dna_in) if c not in "ATGC"]
 is_valid = len(dna_in) >= window_size and not invalid_idx
 
-# ── PAGE HEADER ────────────────────────────────────────────────────────────────
+
 st.markdown("<h1>DNA Structural Analyzer</h1>", unsafe_allow_html=True)
 st.markdown("<hr>", unsafe_allow_html=True)
 
-# ── INVALID ────────────────────────────────────────────────────────────────────
+
 if not is_valid and dna_in:
     highlighted = "".join(
         f'<span style="color:#8A3030;font-weight:600;text-decoration:underline">{c}</span>'
@@ -419,7 +419,7 @@ if not is_valid and dna_in:
         st.rerun()
 
 elif is_valid:
-    # ── COMPUTE ────────────────────────────────────────────────────────────────
+
     N = len(dna_in)
     tm_list, mutations = [], []
     for i in range(N - window_size + 1):
@@ -465,9 +465,7 @@ elif is_valid:
 
     tabs = st.tabs(["Helix · 3D", "Engineering", "Comparison", "History"])
 
-    # ────────────────────────────────────────────────────────────────────────────
-    # TAB 1 — HELIX
-    # ────────────────────────────────────────────────────────────────────────────
+   #Helix
     with tabs[0]:
         col_v, col_l = st.columns([5, 2], gap="medium")
 
@@ -527,7 +525,7 @@ elif is_valid:
                     st.session_state.focus_idx = None
                     st.rerun()
 
-        # ── HELIX VIEWER (left column) ─────────────────────────────────────────
+        #  HELIX VIEWER (left column)
         with col_v:
             turns = 3
             # z centred on 0 so camera center=(0,0,0) sits exactly mid-helix
@@ -588,7 +586,7 @@ elif is_valid:
                     hovertext=g["txt"], hoverinfo="text"
                 ))
 
-            # ── ROTATION FRAMES ────────────────────────────────────────────
+            #  ROTATION FRAMES 
             # z is centred on 0, so all camera centers use z=0 (true midpoint).
             # eye.z=0 keeps the viewpoint level with the helix centre.
             n_frames = 72
@@ -653,9 +651,9 @@ elif is_valid:
 
             st.plotly_chart(fig, use_container_width=True, config=dict(displayModeBar=False))
 
-    # ────────────────────────────────────────────────────────────────────────────
+    
     # TAB 2 — ENGINEERING
-    # ────────────────────────────────────────────────────────────────────────────
+    
     with tabs[1]:
         el, er = st.columns(2, gap="large")
 
@@ -739,9 +737,9 @@ elif is_valid:
                 )
                 st.markdown(_msg, unsafe_allow_html=True)
 
-    # ────────────────────────────────────────────────────────────────────────────
+     
     # TAB 3 — COMPARISON
-    # ────────────────────────────────────────────────────────────────────────────
+    
     with tabs[2]:
         sc1, sc2 = st.columns([3, 1])
         snap_label = sc1.text_input("label", placeholder="Snapshot label...", label_visibility="collapsed")
@@ -777,7 +775,7 @@ elif is_valid:
                     changed += 1
                     diff_html += f'<span class="diff-del">{old}</span><span class="diff-add">{curr}</span>'
 
-            # ── Diff legend ────────────────────────────────────────────────
+            #  Diff legend 
             st.markdown("""
             <div style="display:flex;gap:1.5rem;margin-bottom:0.65rem;flex-wrap:wrap">
               <div style="display:flex;align-items:center;gap:0.5rem;font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:#3A5060">
@@ -809,9 +807,9 @@ elif is_valid:
                               "Save a snapshot before editing, then return here to compare."),
                         unsafe_allow_html=True)
 
-    # ────────────────────────────────────────────────────────────────────────────
+    
     # TAB 4 — HISTORY
-    # ────────────────────────────────────────────────────────────────────────────
+    
     with tabs[3]:
         hc1, hc2 = st.columns([3, 1])
         q = hc1.text_input("q", placeholder="Search label or sequence...", label_visibility="collapsed").strip().upper()
