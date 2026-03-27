@@ -1,86 +1,64 @@
-This guide provides a comprehensive overview of the **DNA Structural Analyzer**, a professional-grade Streamlit application designed for thermodynamic modeling and engineering of genetic sequences.
+This GitHub-specific README is tailored to the final version of your code, focusing on the sophisticated UI, thermodynamic calculations, and 3D rendering capabilities.
+
+***
+
+# DNA Structural Analyzer: 3D Topology & Stability Suite
+
+A professional bioengineering tool built with Streamlit for the 3D visualization, thermodynamic modeling, and engineering of DNA sequences. This application utilizes nearest-neighbor approximations to identify structural instabilities and map restriction enzyme recognition sites.
+
+##  Key Features
+
+###  High-Fidelity 3D Rendering
+* **Fixed Helical Geometry**: Generates a mathematically accurate double-helix with a locked 2.5-turn rotation for standardized 60bp analysis.
+* **Real-time Camera Focus**: Includes a "Focus Engine" that recalculates 3D camera vectors to snap directly to specific nucleotide indices or enzyme cut sites.
+* **Stability Isolation**: Toggle views to isolate rungs based on their stability grade (Stable, Partial, or Unstable).
+
+###  Thermodynamic Analysis
+* **Nearest-Neighbor Modeling**: Calculates local melting temperatures ($T_m$) using a sliding analysis window (default 6bp) to detect regions prone to "breathing" or denaturation.
+* **Automated Mutagenesis**: Suggests $A/T \to G/C$ substitutions for unstable regions and allows for one-click application of these mutations.
+
+###  Engineering Tools
+* **Enzyme Registry**: Built-in detection for common endonucleases including EcoRI, BamHI, HindIII, NotI, SmaI, and XhoI.
+* **Sequence Comparison**: A visual "Diff" engine that highlights changes between the current sequence and historical snapshots using color-coded HTML markers.
+* **Automated PDF Reporting**: Generates a bench-ready summary report including GC-clamp strength, enzyme maps, and stability assessments.
 
 ---
 
-# DNA Structural Analyzer
+##  Installation
 
-A high-fidelity tool for molecular biologists and bioengineers to visualize DNA topology, analyze thermodynamic stability, and perform targeted mutagenesis. The application leverages nearest-neighbor approximations to identify structural weak points and restriction enzyme recognition sites.
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/dna-structural-analyzer.git
+   cd dna-structural-analyzer
+   ```
 
-##  Features & Functionality
+2. **Install dependencies**:
+   The app requires `streamlit`, `numpy`, `plotly`, and `reportlab`.
+   ```bash
+   pip install streamlit numpy plotly reportlab
+   ```
 
-### 1. 3D Structural Analytics
-
-* **Dynamic Topology**: Generates a mathematically accurate double-helix model based on your sequence length, featuring a fixed **3-turn rotation** for visual consistency.
-* **Stability Heatmapping**: Rungs are color-coded based on local melting temperatures ($T_m$):
-* **Stable (Green)**: $T_m > 20°C$.
-* **Partial (Blue)**: $16–20°C$.
-* **Unstable (Red)**: $T_m < 16°C$.
-
-
-* **Interactive Engine**: Includes an **Auto-Rotate** mode and a **Focus System** that snaps the camera to specific indices or enzyme sites.
-
-### 2. Genetic Engineering Suite
-
-* **Mutation Registry**: Automatically identifies "Unstable" windows and suggests specific $A/T \to G/C$ substitutions to increase local structural integrity.
-* **Enzyme Mapping**: Detects recognition sites for common endonucleases (EcoRI, BamHI, HindIII, NotI, SmaI, XhoI) and highlights them in gold on the 3D model.
-* **Termini Analysis**: Calculates GC-clamp strength at both $5'$ and $3'$ ends and generates the reverse-complement sequence instantly.
-
-### 3. Comparison & Version Control
-
-* **Sequence Comparison**: Visually diffs your current sequence against historical snapshots. It uses a custom engine to highlight deletions (red strike-through) and additions (green bold).
-* **History Archive**: Automatically logs manual edits, randomizations, and restorations with timestamps and custom labels.
-
-### 4. Professional PDF Reporting
-
-Generates a comprehensive one-page analytical report including:
-
-* Thermodynamic assessment and grade (Stable/Unstable).
-* Nucleotide composition and GC-content interpretation.
-* A mapped table of restriction sites and suggested mutations.
+3. **Run the application**:
+   ```bash
+   streamlit run dna_app_fixed.py
+   ```
 
 ---
 
-## Installation & Running the Code
+##  Usage Guide
 
-### Prerequisites
-
-Ensure you have Python 3.8+ installed. The application requires the following libraries:
-
-* `streamlit`
-* `numpy`
-* `plotly`
-* `reportlab` (for PDF generation)
-
-### Setup
-
-1. **Install Dependencies**:
-```bash
-pip install streamlit numpy plotly reportlab
-
-```
-
-
-2. **Launch the Application**:
-Navigate to the directory containing `dna_app_fixed.py` and run:
-```bash
-streamlit run dna_app_fixed.py
-
-```
-
-
+1. **Input**: Enter a DNA sequence in the sidebar or use the **"Randomize"** button to generate a test sequence.
+2. **Analyze**: Navigate to the **3D Structural Analytics** tab to inspect the helix. Select enzymes in the **Engineering** tab to highlight their binding sites in white.
+3. **Compare**: Use the **Sequence Comparison** tab to view exactly how your mutations have changed the sequence relative to previous versions in your history.
+4. **Export**: Once your design is optimized, click **"Export Narrative PDF Report"** to download your project documentation.
 
 ---
 
-# How to Use
+##  Built With
+* **Streamlit** - The web framework for the UI.
+* **Plotly** - Used for the 3D Scatter3d helical rendering.
+* **NumPy** - Handles the trigonometric coordinate calculations for the DNA backbone.
+* **ReportLab** - Powers the automated PDF generation.
 
-1. **Input Sequence**: Enter your DNA sequence (A, T, G, C) in the sidebar text area or click **"Generate random"** for a test 60bp strand.
-2. **Analyze Stability**: Use the **"Analysis window"** slider to adjust the sensitivity of the $T_m$ calculation (default is 6bp).
-3. **Explore the Helix**: In the **3D Analytics** tab, use the "Rotate" button to view the topology. Click **"Focus"** next to any enzyme in the Engineering tab to inspect that specific site. Hover over any base pairing for all it's information.
-5. **Optimize**: Review the **Mutation Registry**. Click **"Apply"** on suggested changes to automatically update your sequence with more stable bases.
-6. **Compare & Export**: Save a snapshot in the **Comparison** tab before making major changes. Once finished, use the **"Export PDF report"** button to save your findings.
-
----
-
-### Technical Note
-
-Melting temperatures are calculated using the nearest-neighbor approximation ($4°C$ per $G/C$ and $2°C$ per $A/T$) within the sliding analysis window defined in the sidebar.
+## 📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
